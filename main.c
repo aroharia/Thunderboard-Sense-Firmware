@@ -68,6 +68,9 @@ int main(void)
          APP_VERSION_BUILD
          );
 
+  bool redLEDOn = true;
+  int timer = 0;
+  int time = 15000;
   /**************************************************************************/
   /* Application loop                                                       */
   /**************************************************************************/
@@ -77,6 +80,28 @@ int main(void)
     evt = gecko_wait_event();
     /* Run application and event handler. */
     appHandleEvents(evt);
+
+    //TO-DO:
+
+    if (redLEDOn == true){
+    	BOARD_ledSet(1);
+    	BOARD_rgbledSetColor(100, 0 , 0);
+		BOARD_rgbledEnable(true, 0xFF);
+		if(time%timer){
+			redLEDOn = false;
+			timer = 0;
+		}
+    }
+    else{
+    	BOARD_ledSet(0);
+    	BOARD_rgbledSetColor(0 , 0 , 0);
+		BOARD_rgbledEnable(false, 0xFF);
+		if(time%timer){
+			redLEDOn = true;
+			timer = 0;
+		}
+    }
+    timer++;
   }
 }
 
